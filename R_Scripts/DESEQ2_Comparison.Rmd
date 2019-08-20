@@ -1,0 +1,49 @@
+---
+title: "Testing Sunil’s simulations"
+author: "Timothy Daley"
+date: "2/11/2019"
+output: html_document
+---
+
+```{r}
+testCounts = read.table(file = "/Users/sbodapati/Documents/Qi Lab/CRISPR_Benchmarking/input/Simulation.csv", header = TRUE, sep = ",")
+head(testCounts)
+counts = testCounts[ ,3:6]
+colData = data.frame(condition = factor(c(0, 0, 1, 1))) # 1 is condition, 0 is baseline
+rownames(colData) = colnames(counts)
+# install DESeq2
+#install.packages("BiocManager")
+#BiocManager::install("DESeq2")
+# set up DESeq
+testCountsDESeq2 = DESeq2::DESeqDataSetFromMatrix(countData = counts, 
+                                                  colData = colData, 
+                                                  design = ~ condition)
+# compute
+testCountsDESeq2 = DESeq2::DESeq(testCountsDESeq2)
+# get results
+testCountsDESeq2 = DESeq2::results(testCountsDESeq2)
+log2fc = testCountsDESeq2$log2FoldChange
+library(ggplot2)
+ggplot(data.frame(log2fc = log2fc, essential = factor(testCounts$Essentiality)), aes(x = log2fc, col = essential, fill = essential)) + geom_density(alpha = 0.6) + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+testCounts = read.table(file = "/Users/sbodapati/Documents/Qi Lab/CRISPR_Benchmarking/TKO_comp.txt", header = TRUE, sep = ",")
+head(testCounts)
+counts = testCounts[ ,1:3]
+colData = data.frame(condition = factor(c(0, 1, 1))) # 1 is condition, 0 is baseline
+rownames(colData) = colnames(counts)
+# install DESeq2
+#install.packages("BiocManager")
+#BiocManager::install("DESeq2")
+# set up DESeq
+testCountsDESeq2 = DESeq2::DESeqDataSetFromMatrix(countData = counts, 
+                                                  colData = colData, 
+                                                  design = ~ condition)
+# compute
+testCountsDESeq2 = DESeq2::DESeq(testCountsDESeq2)
+# get results
+testCountsDESeq2 = DESeq2::results(testCountsDESeq2)
+log2fc = testCountsDESeq2$log2FoldChange
+library(ggplot2)
+ggplot(data.frame(log2fc = log2fc, essential = factor(testCounts$Essentiality)), aes(x = log2fc, col = essential, fill = essential)) + geom_density(alpha = 0.6) + theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+```

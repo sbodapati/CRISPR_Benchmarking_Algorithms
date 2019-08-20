@@ -1,0 +1,5 @@
+Samples        baseline        Sample
+R1_T0    1               0
+R2_T0    1               0
+R1_F     1               1
+R2_F     1               1
