@@ -1,4 +1,4 @@
-testCounts = read.table(file = "/Users/sbodapati/Documents/Qi Lab/CRISPR_Benchmarking/input/Simulation.csv", header = TRUE, sep=',')
+testCounts = read.table(file = "./input/Simulation.csv", header = TRUE, sep=',')
 head(testCounts)
 counts = testCounts[ ,3:6]
 colData = data.frame(condition = factor(c(0, 0, 1, 1))) # 1 is condition, 0 is baseline
@@ -16,4 +16,4 @@ testCountsDESeq2 = DESeq2::DESeq(testCountsDESeq2)
 # get results
 testCountsDESeq2 = DESeq2::results(testCountsDESeq2)
 log2fc = testCountsDESeq2$log2FoldChange
-write.csv(log2fc,'/Users/sbodapati/Documents/Qi Lab/CRISPR_Benchmarking/input/Simulation_l2fc.csv')
+write.csv(log2fc,'./input/Simulation_l2fc.csv')
