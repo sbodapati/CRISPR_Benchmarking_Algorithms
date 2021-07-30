@@ -178,7 +178,7 @@ def RunSimulation(essential_genes_mean, non_essential_variance, essential_varian
     with open('./input/Simulation.csv', "w") as myfile:
         df_data.to_csv(myfile, index=False, sep =',')
 
-    call('rscript ./R_Scripts/SimToLFC_R.R', shell = True)
+    call('/usr/local/bin/Rscript ./R_Scripts/SimToLFC_R.R', shell = True)
 
 
 
@@ -206,7 +206,7 @@ def RunSimulation(essential_genes_mean, non_essential_variance, essential_varian
     with open('./input/CRISPhieRmix_Simulation_l2fc.csv', "w") as myfile:
         CRISPhieRmix_Simulation_l2fc.to_csv(myfile, sep = ',')
 
-    AnalyzeSim(rep_num)
+    #AnalyzeSim(rep_num)
     # plt.show()
 
     return()
